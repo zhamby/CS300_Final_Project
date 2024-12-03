@@ -24,5 +24,9 @@ $(TARGET): $(OBJS)
 clean:
 	rm -f $(OBJS) $(TARGET)
 
+# Run the program
+run: $(TARGET)
+	./$(TARGET)
+	
 # Phony targets
 .PHONY: all clean
