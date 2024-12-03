@@ -7,13 +7,14 @@
 #define HAMMING_H
 
 #include <iostream>
+#include <string>
 #include "Eigen/Dense"
 
 
 class Hamming {
 
     public:    
-        Hamming();
+        Hamming(std::string file);
         ~Hamming();
 
         void printOut();
@@ -22,7 +23,7 @@ class Hamming {
     private:
         Eigen::Matrix<int, 7, 4> generator;
         Eigen::Matrix<int, 3, 7> parityCheck;
-        
+        std::string fileName = "";
 
 };
 

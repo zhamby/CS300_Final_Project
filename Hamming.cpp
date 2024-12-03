@@ -7,7 +7,7 @@
 #include "Eigen/Dense"
 #include "Hamming.h"
 
-Hamming::Hamming() : generator(7,4), parityCheck(3,7) {
+Hamming::Hamming(std::string file) : generator(7,4), parityCheck(3,7) {
 
     generator << 1, 1, 0, 1,
                  1, 0, 1, 1,
@@ -22,6 +22,9 @@ Hamming::Hamming() : generator(7,4), parityCheck(3,7) {
     parityCheck << 1, 0, 1, 0, 1, 0, 1,
                    0, 1, 1, 0, 0, 1, 1,
                    0, 0, 0, 1, 1, 1, 1;
+
+
+    fileName = file;
 }
 
 Hamming::~Hamming(){}
