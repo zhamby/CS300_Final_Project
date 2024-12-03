@@ -20,7 +20,7 @@ class Hamming {
         void printOut();
         void writeToFile();
 
-    private:
+    protected:
         Eigen::Matrix<int, 7, 4> generator;
         Eigen::Matrix<int, 3, 7> parityCheck;
         std::string fileName = "";
@@ -51,6 +51,15 @@ class Encode : public Hamming {
 
 
 };
+
+class ErrorEncode : public Encode  {
+
+    public:
+        ErrorEncode();
+        ~ErrorEncode();
+
+
+}
 
 
 #endif
