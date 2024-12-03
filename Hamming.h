@@ -59,7 +59,7 @@ class ErrorEncode : public Encode  {
         ~ErrorEncode();
 
 
-}
+};
 
 
 #endif
