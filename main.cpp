@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "Hamming.h"
+#include "Eigen/Dense"
 
 int main() {
     // Vector to store Hamming objects
