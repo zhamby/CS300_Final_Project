@@ -47,7 +47,7 @@ class Encode : public Hamming {
     public:
         Encode(std::string file);
 
-        // Function to encode a 4-bit message into a 7-bit Hamming code
+        //Function to encode a 4-bit message into a 7-bit Hamming code
         Eigen::Matrix<int, 1, 7> encodeMessage(const Eigen::Matrix<int, 1, 4>& message) const;
 
         //Print encoded msg
