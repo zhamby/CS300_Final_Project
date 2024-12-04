@@ -15,7 +15,7 @@ class Hamming {
 
     public:    
         Hamming(std::string file);
-        ~Hamming();
+        virtual ~Hamming();
 
         void printOut();
         void writeToFile();
@@ -23,7 +23,7 @@ class Hamming {
     protected:
         Eigen::Matrix<int, 7, 4> generator;
         Eigen::Matrix<int, 3, 7> parityCheck;
-        std::string fileName = "";
+        std::string fileName;
 
 };
 
@@ -46,10 +46,11 @@ class Encode : public Hamming {
 
     public:
         Encode(std::string file);
-        ~Encode();
 
-        Eigen::Matrix<int, 1, 7> encodeMessage(Eigen::Matrix<int, 1, 4> message);
+        // Function to encode a 4-bit message into a 7-bit Hamming code
+        Eigen::Matrix<int, 1, 7> encodeMessage(const Eigen::Matrix<int, 1, 4>& message) const;
 
+        //Print encoded msg
         void printEncodedMsg(Eigen::Matrix<int, 1, 7> encodedMessage);
 
 };

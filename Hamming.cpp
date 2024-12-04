@@ -27,10 +27,14 @@ Hamming::Hamming(std::string file) : generator(7,4), parityCheck(3,7) {
     fileName = file;
 }
 
-Hamming::~Hamming(){}
+Hamming::~Hamming() {}
 
 
 void Hamming::printOut() {
     std::cout << "Generator Matrix:\n" << generator << "\n";
-    std::cout << "Parity Check Matrix:\n" << parityCheck << "\n";
+    std::cout << "Parity Check Matrix:\n" << parityCheck << "\n\n";
+}
+
+void Hamming::writeToFile() {
+
 }

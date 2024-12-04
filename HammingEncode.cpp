@@ -9,14 +9,13 @@
 
 
 Encode::Encode(std::string file) : Hamming(file) {}
-Encode::~Encode() {}
 
+Eigen::Matrix<int, 1, 7> Encode::encodeMessage(const Eigen::Matrix<int, 1, 4>& message) const {
 
-Eigen::Matrix<int, 1, 7> Encode::encodeMessage(Eigen::Matrix<int, 1, 4> message) {
-    //Multiply the message by the generator matrix
-    Eigen::Matrix<int, 1, 7> encodedMessage = message * generator;
+    //Encode the message using the generator matrix
+    Eigen::Matrix<int, 1, 7> encodedMessage = message * generator.transpose();
 
-    //Apply modulo 2 
+    //Ensure result is binary
     encodedMessage = encodedMessage.unaryExpr([](int x) { return x % 2; });
 
     return encodedMessage;
@@ -24,5 +23,5 @@ Eigen::Matrix<int, 1, 7> Encode::encodeMessage(Eigen::Matrix<int, 1, 4> message)
 
 
 void Encode::printEncodedMsg(Eigen::Matrix<int, 1, 7> encodedMessage) {
-    std::cout << "Encoded Message: " << encodedMessage << std::endl;
+    std::cout << "\nEncoded Message: " << encodedMessage << "\n\n";
 }
