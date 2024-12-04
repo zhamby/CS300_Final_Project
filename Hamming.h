@@ -45,10 +45,12 @@ class Decode : public Hamming {
 class Encode : public Hamming {
 
     public:
-        Encode();
+        Encode(std::string file);
         ~Encode();
 
+        Eigen::Matrix<int, 1, 7> encodeMessage(Eigen::Matrix<int, 1, 4> message);
 
+        void printEncodedMsg(Eigen::Matrix<int, 1, 7> encodedMessage);
 
 };
 
