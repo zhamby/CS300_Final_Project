@@ -37,10 +37,12 @@ class Decode : public Hamming {
     public:
         Decode(std::string file);
         ~Decode();
-        void processFile() override;
+        
 
     private:
-    //helper functions
+        void processFile() override;
+        
+        //helper functions
         std::vector<int> parseLineToBits(const std::string& line);
         int checkParity(const Eigen::Matrix<int, 1, 7>& block) const;
         Eigen::Matrix<int, 1, 4> extractData(const Eigen::Matrix<int, 1, 7>& block) const;
