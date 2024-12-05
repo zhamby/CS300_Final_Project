@@ -6,6 +6,7 @@
 #ifndef HAMMING_H
 #define HAMMING_H
 
+#include <fstream>
 #include <iostream>
 #include <string>
 #include "Eigen/Dense"
