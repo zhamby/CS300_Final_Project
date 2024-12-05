@@ -35,6 +35,3 @@ void Hamming::printOut() {
     std::cout << "Parity Check Matrix:\n" << parityCheck << "\n\n";
 }
 
-void Hamming::writeToFile() {
-
-}

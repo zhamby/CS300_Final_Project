@@ -18,13 +18,15 @@ class Hamming {
         virtual ~Hamming();
 
         void printOut();
-        void writeToFile();
+        
 
     protected:
         Eigen::Matrix<int, 7, 4> generator;
         Eigen::Matrix<int, 3, 7> parityCheck;
         std::string fileName;
 
+        virtual void processFile();
+    
 };
 
 
@@ -38,6 +40,7 @@ class Decode : public Hamming {
 
     private:
         int errors = 0;
+        void processFile() override;
 
 };
 
@@ -53,6 +56,8 @@ class Encode : public Hamming {
         //Print encoded msg
         void printEncodedMsg(Eigen::Matrix<int, 1, 7> encodedMessage);
 
+    private:
+        void processFile() override;
 };
 
 class ErrorEncode : public Encode  {
@@ -61,7 +66,8 @@ class ErrorEncode : public Encode  {
         ErrorEncode();
         ~ErrorEncode();
 
-
+    private:
+        void processFile() override;
 };
 
 
