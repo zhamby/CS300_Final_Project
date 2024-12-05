@@ -13,6 +13,8 @@ Encode::Encode(std::string file) : Hamming(file) {
 
 }
 
+Encode::~Encode(){}
+
 //Encode a 4-bit message into a 7-bit hamming code
 Eigen::Matrix<int, 1, 7> Encode::encodeMessage(const Eigen::Matrix<int, 1, 4>& message) const {
 
