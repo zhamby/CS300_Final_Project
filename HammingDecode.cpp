@@ -17,6 +17,8 @@ Decode::Decode(std::string file) : Hamming(file) {
 
 }
 
+Decode::~Decode() {}
+
 void Decode::processFile() {
     std::ifstream inputFile(fileName, std::ios::in);
     if (!inputFile.is_open()) {
