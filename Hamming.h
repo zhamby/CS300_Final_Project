@@ -9,6 +9,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Eigen/Dense"
 
 
@@ -34,15 +35,16 @@ class Hamming {
 class Decode : public Hamming {
 
     public:
-        Decode();
+        Decode(std::string file);
         ~Decode();
-
-        bool errorCheck(int errors);
-
-    private:
-        int errors = 0;
         void processFile() override;
 
+    private:
+    //helper functions
+        std::vector<int> parseLineToBits(const std::string& line);
+        int checkParity(const Eigen::Matrix<int, 1, 7>& block) const;
+        Eigen::Matrix<int, 1, 4> extractData(const Eigen::Matrix<int, 1, 7>& block) const;
+        char matrixToChar(const Eigen::Matrix<int, 1, 4>& data) const;
 };
 
 
