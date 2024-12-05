@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -I./Eigen -Wall -Wextra 
+CXXFLAGS = -I./Eigen -Wall 
 
 # Target executable
 TARGET = main
