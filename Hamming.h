@@ -26,7 +26,7 @@ class Hamming {
         Eigen::Matrix<int, 3, 7> parityCheck;
         std::string fileName;
 
-        virtual void processFile();
+        virtual void processFile() = 0;
     
 };
 
@@ -64,7 +64,7 @@ class Encode : public Hamming {
 class ErrorEncode : public Encode  {
 
     public:
-        ErrorEncode();
+        ErrorEncode(std::string file);
         ~ErrorEncode();
 
     private:
