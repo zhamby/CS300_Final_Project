@@ -1,12 +1,12 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -I./Eigen -Wall 
+CXXFLAGS = -I./Eigen #-Wall 
 
 # Target executable
 TARGET = main
 
 # Source files and object files
-SRCS = main.cpp Hamming.cpp HammingDecode.cpp HammingEncode.cpp HammingErrorEncode.cpp
+SRCS = main.cpp Hamming.cpp #HammingDecode.cpp HammingEncode.cpp HammingErrorEncode.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 # Default rule
