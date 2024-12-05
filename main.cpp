@@ -22,14 +22,20 @@ int main() {
     }
 */
 
+    std::string fileName = "test1.txt";
  
     //Encoding testing
-    Encode encoder("file.txt");
-    
-    //encoder.printOut();  
+    Encode encoder(fileName);
 
+
+
+    return 0;
+}
+
+
+/*
     Eigen::Matrix<int, 1, 4> message1, message2, message3, message4;
-    
+
     //Examples
     message1 << 1, 0, 1, 0;  
     message2 << 0, 1, 1, 1;  
@@ -42,6 +48,7 @@ int main() {
     Eigen::Matrix<int, 1, 7> encodedMessage3 = encoder.encodeMessage(message3);
     Eigen::Matrix<int, 1, 7> encodedMessage4 = encoder.encodeMessage(message4);
 
+
     std::cout << "1: ";
     encoder.printEncodedMsg(encodedMessage1);
     std::cout << "2: ";
@@ -50,6 +57,4 @@ int main() {
     encoder.printEncodedMsg(encodedMessage3);
     std::cout << "4: ";
     encoder.printEncodedMsg(encodedMessage4);
-   
-    return 0;
-}
+*/
