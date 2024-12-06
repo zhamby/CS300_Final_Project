@@ -42,12 +42,29 @@ void Decode::processFile() {
 
         std::vector<int> bits = parseLineToBits(line);
 
+        // Debugging: print parsed bits
+        std::cout << "Parsed bits: ";
+        for (int bit : bits) {
+            std::cout << bit;
+        }
+        std::cout << std::endl;
+
+
         // Process each 7-bit block
         for (size_t i = 0; i + 7 <= bits.size(); i += 7) {
             Eigen::Matrix<int, 1, 7> receivedBlock;
             for (int j = 0; j < 7; ++j) {
                 receivedBlock(0, j) = bits[i + j];
             }
+
+
+            // Debugging: print received 7-bit block
+            std::cout << "Received block: ";
+            for (int j = 0; j < 7; ++j) {
+                std::cout << receivedBlock(0, j);
+            }
+            std::cout << std::endl;
+
 
             // Decode the 7-bit block
             int errorPosition = checkParity(receivedBlock);
@@ -63,11 +80,27 @@ void Decode::processFile() {
             // Extract the original 4-bit data
             Eigen::Matrix<int, 1, 4> decodedData = extractData(receivedBlock);
 
+
+            // Debugging: print extracted 4-bit data
+            std::cout << "Extracted 4-bit data: ";
+            for (int i = 0; i < 4; ++i) {
+                std::cout << decodedData(0, i);
+            }
+            std::cout << std::endl;
+
+
             // Convert 4-bit block back to character
             char decodedChar = matrixToChar(decodedData);
+            std::cout << "Decoded Char: " << decodedChar << std::endl; // Debugging output
             outputFile << decodedChar;
+    
+
+            if (decodedChar != '\0') {
+                outputFile << decodedChar;
+            }
         }
     }
+
 
     inputFile.close();
     outputFile.close();
@@ -111,5 +144,13 @@ char Decode::matrixToChar(const Eigen::Matrix<int, 1, 4>& data) const {
     for (int i = 0; i < 4; ++i) {
         value = (value << 1) | data(0, i);
     }
-    return static_cast<char>(value);
+    // Debugging: print the integer value before converting to char
+    std::cout << "Decoded 4-bit value (int): " << value << std::endl;
+
+    // Check if value corresponds to printable ASCII characters (between 32 and 126)
+    if (value >= 32 && value <= 126) {
+        return static_cast<char>(value);
+    } else {
+        return '\0';  // Return null character if not a printable ASCII character
+    }
 };
