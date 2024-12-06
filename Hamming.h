@@ -39,7 +39,7 @@ class Decode : public Hamming {
     private:
         void processFile() override;
         
-        //helper functions
+        //Helper functions
         std::vector<int> parseLineToBits(const std::string& line);
         int checkParity(const Eigen::Matrix<int, 1, 7>& block) const;
         Eigen::Matrix<int, 1, 4> extractData(const Eigen::Matrix<int, 1, 7>& block);
@@ -65,6 +65,8 @@ class Encode : public Hamming {
 
     private:
         void processFile() override;
+
+        //Helper functions
         std::string getOriginalMessage(const std::string& fileName);
         std::pair<Eigen::Matrix<int, 1, 4>, Eigen::Matrix<int, 1, 4>> splitBinary(const Eigen::Matrix<int, 1, 8>& binary);
         Eigen::Matrix<int, 1, 8> charToBinary(char ch);
