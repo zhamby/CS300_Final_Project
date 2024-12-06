@@ -20,10 +20,18 @@ ErrorEncode::~ErrorEncode(){}
   
 void ErrorEncode::encodeFile() {
     std::cout << "ErrorEncode::processFile() is called!" << std::endl;
-    Encode::processFile();  // Call base class processFile
+
+    // Call base class processFile (encodes the original message)
+    Encode::processFile();  
 
     // Now introduce errors into the encoded messages
     errorEncodeRand();  // Introduce random errors
+
+    // Check if hammingCodeWithErrors is populated
+    if (hammingCodeWithErrors.empty()) {
+        std::cerr << "Error: hammingCodeWithErrors is empty. No errors introduced." << std::endl;
+        return;
+    }
 
     // Now output to errors.txt
     std::string outputFileName = fileName.substr(0, fileName.find_last_of('.')) + "_errors.txt";
@@ -33,22 +41,35 @@ void ErrorEncode::encodeFile() {
         return;
     }
 
-    // Check if the encoded messages with errors exist
+    // Debugging: Check the size of the hammingCodeWithErrors
     std::cout << "Writing errors to " << outputFileName << std::endl;
-    const auto& hammingWithErrors = hammingCodeWithErrors;
-    for (size_t i = 0; i < hammingWithErrors.size(); i += 2) {
-        const auto& code1 = hammingWithErrors[i];
-        const auto& code2 = hammingWithErrors[i + 1];
+    std::cout << "Number of blocks with errors: " << hammingCodeWithErrors.size() << std::endl;
 
-        // Write the 7-bit codes with errors
+    // Print out the contents of hammingCodeWithErrors (for debugging purposes)
+    for (size_t i = 0; i < hammingCodeWithErrors.size(); ++i) {
+        std::cout << "Block " << i << ": ";
         for (int j = 0; j < 7; ++j) {
-            outputFile << code1(0, j);  // First 7 bits
+            std::cout << hammingCodeWithErrors[i](0, j);  // Print each bit
         }
-        for (int j = 0; j < 7; ++j) {
-            outputFile << code2(0, j);  // Next 7 bits
-        }
+        std::cout << std::endl;
+    }
 
-        outputFile << "\n";
+    // Write the modified Hamming codes to the output file
+    for (size_t i = 0; i < hammingCodeWithErrors.size(); i += 2) {
+        if (i + 1 < hammingCodeWithErrors.size()) {
+            const auto& code1 = hammingCodeWithErrors[i];
+            const auto& code2 = hammingCodeWithErrors[i + 1];
+
+            // Write the 7-bit codes with errors to the file
+            for (int j = 0; j < 7; ++j) {
+                outputFile << code1(0, j);  // First 7 bits
+            }
+            for (int j = 0; j < 7; ++j) {
+                outputFile << code2(0, j);  // Next 7 bits
+            }
+
+            outputFile << "\n";  // Newline after each pair
+        }
     }
 
     outputFile.close();
@@ -68,20 +89,30 @@ void ErrorEncode::errorEncodeStatic(size_t codeIndex, int bitPos) {
 
 // Introduces a random error in each Hamming code block
 void ErrorEncode::errorEncodeRand() {
-    // Access the encoded messages without const reference
     auto& encodedMessages = this->getEncodedMessages();  // Now it's a reference
 
-    hammingCodeWithErrors = encodedMessages; // Copy the encoded messages
+    std::cout << "Encoded messages size before error: " << encodedMessages.size() << std::endl;
 
-    std::cout << "Introducing random errors..." << std::endl;
+    hammingCodeWithErrors.clear();
 
-    // Iterate through each encoded message and introduce a random error
     for (auto& encodedMessage : encodedMessages) {
-        // Randomly introduce an error (flip a bit in each encoded message)
-        int bitPos = rand() % 7;  // Random bit position to flip
-        encodedMessage(0, bitPos) = (encodedMessage(0, bitPos) == 0) ? 1 : 0;  // Flip the bit
-        hammingCodeWithErrors.push_back(encodedMessage);  // Store it with errors
+        std::cout << "Before error: ";
+        for (int j = 0; j < 7; ++j) {
+            std::cout << encodedMessage(0, j);
+        }
+        std::cout << std::endl;
+
+        int bitPos = rand() % 7;
+        encodedMessage(0, bitPos) = (encodedMessage(0, bitPos) == 0) ? 1 : 0;
+
+        std::cout << "After error: ";
+        for (int j = 0; j < 7; ++j) {
+            std::cout << encodedMessage(0, j);
+        }
+        std::cout << std::endl;
+
+        hammingCodeWithErrors.push_back(encodedMessage);
     }
 
-    std::cout << "Random errors introduced." << std::endl;
+    std::cout << "Hamming with errors size: " << hammingCodeWithErrors.size() << std::endl;
 }

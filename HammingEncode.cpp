@@ -64,6 +64,10 @@ void Encode::processFile() {
             }
 
             outputFile << "\n"; // Newline after every 14-bit message
+
+            // Add the encoded messages to the encodedMessages vector
+            encodedMessages.push_back(encodedMsg1);
+            encodedMessages.push_back(encodedMsg2);
         }
     }
 
