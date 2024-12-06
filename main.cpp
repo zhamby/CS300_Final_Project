@@ -22,6 +22,16 @@ int main() {
     }
 */
 
+    // "HELLO" ASCII values: H = 72, E = 69, L = 76, L = 76, O = 79
+    /*  
+        Hamming codes for HELLO
+        10011001110000
+        10011000100101
+        10011000111100
+        10011000111100
+        10011001111111
+*/
+
     std::string eFileName = "test1.txt";
     std::string dFileName = "test1_out.txt";
  

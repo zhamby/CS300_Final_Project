@@ -46,8 +46,10 @@ class Decode : public Hamming {
         std::vector<int> parseLineToBits(const std::string& line);
         int checkParity(const Eigen::Matrix<int, 1, 7>& block) const;
         Eigen::Matrix<int, 1, 4> extractData(const Eigen::Matrix<int, 1, 7>& block);
-        char matrixToChar(const Eigen::Matrix<int, 1, 4>& data) const;
-};
+        char matrixToChar(const Eigen::Matrix<int, 1, 4>& data);
+        Eigen::Matrix<int, 1, 7> correctBlock(const Eigen::Matrix<int, 1, 7>& block);
+        char byteToChar(const Eigen::Matrix<int, 1, 8>& data) const;
+};  
 
 
 class Encode : public Hamming {
