@@ -29,7 +29,7 @@ Eigen::Matrix<int, 1, 7> Encode::encodeMessage(const Eigen::Matrix<int, 1, 4>& m
 
 
 void Encode::printEncodedMsg(Eigen::Matrix<int, 1, 7> encodedMessage) {
-    std::cout << "Encoded Message: " << encodedMessage << "\n";
+    std::cout << "\nEncoded Message: " << encodedMessage;
 }
 
 //Process input file, encode characters, and write to output file
@@ -64,10 +64,11 @@ void Encode::processFile() {
         Eigen::Matrix<int, 1, 7> encodedMsg1 = encodeMessage(msg1);
         Eigen::Matrix<int, 1, 7> encodedMsg2 = encodeMessage(msg2);
 
-        std::cout << "Message 1: ";
+        std::cout << "\nMessage 1: ";
         printEncodedMsg(encodedMsg1);
         std::cout << "\nMessage 2: ";
         printEncodedMsg(encodedMsg2);
+        std::cout << std::endl;
 
         //Write encoded messages to output
         for (int i = 0; i < 7; ++i) {
