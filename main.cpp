@@ -22,15 +22,14 @@ int main() {
     }
 */
 
- 
+
+    std::string eFileName = "test1.txt";  // The original message file
+
+    // Encoding with error introduction
+    ErrorEncode errorEncoder(eFileName);
 
 
-    std::string eFileName = "test1.txt";
-    std::string dFileName = "test1_out.txt";
- 
-    //Encoding testing
-    Encode encoder(eFileName);  
-    Decode decoder(dFileName);  
+
 
 
     return 0;
@@ -41,10 +40,22 @@ int main() {
 
     /*  
         "HELLO" ASCII values: H = 72, E = 69, L = 76, L = 76, O = 79
-        Hamming codes for HELLO
-        10011001110000
-        10011000100101
-        10011000111100
-        10011000111100
-        10011001111111
+        Hamming codes for HELLO:
+            10011001110000
+            10011000100101
+            10011000111100
+            10011000111100
+            10011001111111
+
+
+
+        Working test:
+            std::string eFileName = "test1.txt";
+            std::string dFileName = "test1_out.txt";
+        
+            //Encoding testing
+            Encode encoder(eFileName);  
+            Decode decoder(dFileName);  
+
+
     */

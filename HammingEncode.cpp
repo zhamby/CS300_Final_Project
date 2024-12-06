@@ -8,7 +8,6 @@
 
 //Encode class constructor
 Encode::Encode(std::string file) : Hamming(file) {
-    processFile();
 }
 Encode::~Encode(){}
 
@@ -73,7 +72,6 @@ void Encode::processFile() {
     std::cout << "Encoding complete. Output written to " + outputFileName + ".\n";
 }
 
-
 //Encode a 4-bit message into a 7-bit hamming code
 Eigen::Matrix<int, 1, 7> Encode::encodeMessage(const Eigen::Matrix<int, 1, 4>& message) const {
 
@@ -88,7 +86,7 @@ Eigen::Matrix<int, 1, 7> Encode::encodeMessage(const Eigen::Matrix<int, 1, 4>& m
 
 
 // Helper function to convert a character to its 8-bit binary representation
-Eigen::Matrix<int, 1, 8> Encode::charToBinary(char ch) {
+Eigen::Matrix<int, 1, 8> Encode::charToBinary(char ch) const {
     int asciiValue = static_cast<unsigned char>(ch);
     Eigen::Matrix<int, 1, 8> binary;
     for (int i = 0; i < 8; ++i) {
@@ -98,14 +96,22 @@ Eigen::Matrix<int, 1, 8> Encode::charToBinary(char ch) {
 }
 
 // Helper function to split 8-bit binary into two 4-bit chunks
-std::pair<Eigen::Matrix<int, 1, 4>, Eigen::Matrix<int, 1, 4>> Encode::splitBinary(const Eigen::Matrix<int, 1, 8>& binary) {
+std::pair<Eigen::Matrix<int, 1, 4>, Eigen::Matrix<int, 1, 4>> Encode::splitBinary(const Eigen::Matrix<int, 1, 8>& binary) const {
     Eigen::Matrix<int, 1, 4> msg1 = binary.block<1, 4>(0, 0); // Higher 4 bits
     Eigen::Matrix<int, 1, 4> msg2 = binary.block<1, 4>(0, 4); // Lower 4 bits
     return {msg1, msg2};
 }
 
 
-std::string Encode::getOriginalMessage(const std::string& fileName) {
+void Encode::printEncodedMsg(const Eigen::Matrix<int, 1, 7>& encodedMessage) const {
+    for (int j = 0; j < encodedMessage.cols(); ++j) {
+        std::cout << encodedMessage(0, j);
+    }
+    std::cout << std::endl;
+}
+
+
+std::string Encode::getOriginalMessage(const std::string& fileName) const {
     std::ifstream inputFile(fileName, std::ios::in);
     if (!inputFile.is_open()) {
         std::cerr << "Error opening file: " << fileName << std::endl;
@@ -122,4 +128,9 @@ std::string Encode::getOriginalMessage(const std::string& fileName) {
 
     inputFile.close();
     return originalMessage;
+}
+
+
+std::vector<Eigen::Matrix<int, 1, 7>>&Encode::getEncodedMessages() {
+    return encodedMessages;
 }

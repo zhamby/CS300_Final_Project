@@ -61,15 +61,23 @@ class Encode : public Hamming {
         Eigen::Matrix<int, 1, 7> encodeMessage(const Eigen::Matrix<int, 1, 4>& message) const;
 
         //Print encoded msg
-        void printEncodedMsg(Eigen::Matrix<int, 1, 7> encodedMessage);
+        void printEncodedMsg(const Eigen::Matrix<int, 1, 7>& encodedMessage) const;
 
-    private:
+
+    protected:
         void processFile() override;
 
         //Helper functions
-        std::string getOriginalMessage(const std::string& fileName);
-        std::pair<Eigen::Matrix<int, 1, 4>, Eigen::Matrix<int, 1, 4>> splitBinary(const Eigen::Matrix<int, 1, 8>& binary);
-        Eigen::Matrix<int, 1, 8> charToBinary(char ch);
+        std::string getOriginalMessage(const std::string& fileName) const;
+        std::pair<Eigen::Matrix<int, 1, 4>, Eigen::Matrix<int, 1, 4>> splitBinary(const Eigen::Matrix<int, 1, 8>& binary) const;
+        Eigen::Matrix<int, 1, 8> charToBinary(char ch) const;
+
+        //Getter for encoded msgs
+        std::vector<Eigen::Matrix<int, 1, 7>>& getEncodedMessages();
+
+    private:
+        std::vector<Eigen::Matrix<int, 1, 7>> encodedMessages;
+        
 };
 
 class ErrorEncode : public Encode  {
@@ -78,8 +86,16 @@ class ErrorEncode : public Encode  {
         ErrorEncode(std::string file);
         ~ErrorEncode();
 
+        void encodeFile();
+
+        // Introduces an error at a specific bit
+        void errorEncodeStatic(size_t codeIndex, int bitPos);
+        // Introduces a random error in each Hamming code block
+        void errorEncodeRand();
+
     private:
-        void processFile() override;
+        std::vector<Eigen::Matrix<int, 1, 7>> hammingCodeWithErrors;  // Stores encoded Hamming blocks with errors
+
 };
 
 
