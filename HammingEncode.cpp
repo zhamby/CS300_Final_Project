@@ -72,6 +72,9 @@ void Encode::processFile() {
     // Output the encoded 7-bit messages in pairs of 7 bits
     int messageCount = 0;
     for (size_t i = 0; i < encodedMessages.size(); i += 2) {
+        // Ensure that we don't go out of bounds
+        if (i + 1 >= encodedMessages.size()) break;
+
         Eigen::Matrix<int, 1, 7> encodedMsg1 = encodedMessages[i];
         Eigen::Matrix<int, 1, 7> encodedMsg2 = encodedMessages[i + 1];
 
@@ -84,15 +87,11 @@ void Encode::processFile() {
         }
 
         outputFile << "\n"; // Add a newline after every two 7-bit blocks (14 bits)
-        messageCount++;
-
-        // Ensure we only have 5 lines of output for "HELLO"
-        if (messageCount == 5) {
-            break;
-        }
-    }
+        
+    } 
 
     inputFile.close();
     outputFile.close();
+
     std::cout << "Encoding complete. Output written to " + outputFileName + ".\n";
 }
