@@ -19,30 +19,45 @@ Decode::~Decode() {}
 
 
 void Decode::processFile() {
-    std::ifstream inputFile(fileName, std::ios::in);
-    if (!inputFile.is_open()) {
-        std::cerr << "Error opening file: " << fileName << std::endl;
+    // Open the "out" file (test1_out.txt) and the "errors" file (test1_errors.txt)
+    std::ifstream outFile(fileName.substr(0, fileName.find_last_of('.')) + "_out.txt", std::ios::in);
+    if (!outFile.is_open()) {
+        std::cerr << "Error opening file: " << fileName.substr(0, fileName.find_last_of('.')) + "_out.txt" << std::endl;
         return;
     }
 
-    std::string outputFileName = fileName.substr(0, fileName.find_last_of('.')) + "_decoded.txt";
-    std::ofstream outputFile(outputFileName, std::ios::out | std::ios::trunc);
-    if (!outputFile.is_open()) {
+    std::ifstream errorFile(fileName.substr(0, fileName.find_last_of('.')) + "_errors.txt", std::ios::in);
+    if (!errorFile.is_open()) {
+        std::cerr << "Error opening file: " << fileName.substr(0, fileName.find_last_of('.')) + "_errors.txt" << std::endl;
+        outFile.close();
+        return;
+    }
+
+    // Open the output file for decoded content (write only the errors to the decoded file)
+    std::ofstream decodedFile(fileName.substr(0, fileName.find_last_of('.')) + "_decoded.txt", std::ios::out | std::ios::trunc);
+    if (!decodedFile.is_open()) {
         std::cerr << "Error creating output file." << std::endl;
-        inputFile.close();
+        outFile.close();
+        errorFile.close();
         return;
     }
 
     std::string line;
-    while (std::getline(inputFile, line)) {
-        // Process the line using helper functions
-        auto [data1, data2] = parseAndCorrectBlock(line);  // Parse and correct 7-bit blocks
-        if (data1.size() == 0 || data2.size() == 0) continue;  // Skip empty or invalid lines
+    
+    // Decode and print content of the "out" file (for terminal display)
+    std::cout << "Decoding content of the out file:" << std::endl;
+    while (std::getline(outFile, line)) {
+        if (line.length() != 14) {
+            std::cerr << "Error: Expected 14 bits per line in out file. Line has " << line.length() << " bits." << std::endl;
+            continue;
+        }
 
-        // Combine the data from both blocks and convert to character
+        auto [data1, data2] = parseAndCorrectBlock(line);
+        if (data1.size() == 0 || data2.size() == 0) continue; 
+
         char decodedChar = combineDataAndConvertToChar(data1, data2);
 
-        // Convert data1 and data2 to binary string
+        // Print binary and decoded character to the terminal
         std::string binaryString = "";
         for (int i = 0; i < 4; ++i) {
             binaryString += std::to_string(data1(0, i)); // Add data1
@@ -50,18 +65,44 @@ void Decode::processFile() {
         for (int i = 0; i < 4; ++i) {
             binaryString += std::to_string(data2(0, i)); // Add data2
         }
-
-        // Print binary and decoded character to console
+        
         std::cout << "Binary: " << binaryString << " -> ASCII: " << decodedChar << std::endl;
-
-        // Write the decoded character to the output file inside the loop
-        outputFile << decodedChar;
     }
 
-    inputFile.close();
-    outputFile.close();
-    std::cout << "Decoding complete. Output written to " << outputFileName << ".\n";
+    std::cout << "\nDecoding content of the errors file:" << std::endl;
+    // Decode and print content of the "errors" file (for terminal display) and write to decoded file
+    while (std::getline(errorFile, line)) {
+        if (line.length() != 14) {
+            std::cerr << "Error: Expected 14 bits per line in errors file. Line has " << line.length() << " bits." << std::endl;
+            continue;
+        }
+
+        auto [data1, data2] = parseAndCorrectBlock(line);
+        if (data1.size() == 0 || data2.size() == 0) continue; 
+
+        char decodedChar = combineDataAndConvertToChar(data1, data2);
+
+        // Print binary and decoded character to the terminal
+        std::string binaryString = "";
+        for (int i = 0; i < 4; ++i) {
+            binaryString += std::to_string(data1(0, i)); // Add data1
+        }
+        for (int i = 0; i < 4; ++i) {
+            binaryString += std::to_string(data2(0, i)); // Add data2
+        }
+        
+        std::cout << "Binary: " << binaryString << " -> ASCII: " << decodedChar << std::endl;
+
+        // Write the decoded character to the output file (this is the only file written to)
+        decodedFile << decodedChar;
+    }
+
+    outFile.close();
+    errorFile.close();
+    decodedFile.close();
+    std::cout << "Decoding complete. Output written to " << fileName.substr(0, fileName.find_last_of('.')) + "_decoded.txt" << ".\n";
 }
+
 
 
 // Parse a line of binary text into a vector of integers

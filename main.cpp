@@ -28,6 +28,7 @@ int main() {
     // Encoding with error introduction
     ErrorEncode errorEncoder(eFileName);
 
+    Decode decoder(eFileName);
 
 
 
