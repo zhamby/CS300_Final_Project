@@ -22,15 +22,8 @@ int main() {
     }
 */
 
-    // "HELLO" ASCII values: H = 72, E = 69, L = 76, L = 76, O = 79
-    /*  
-        Hamming codes for HELLO
-        10011001110000
-        10011000100101
-        10011000111100
-        10011000111100
-        10011001111111
-*/
+ 
+
 
     std::string eFileName = "test1.txt";
     std::string dFileName = "test1_out.txt";
@@ -44,28 +37,14 @@ int main() {
 }
 
 
-/*
-    Eigen::Matrix<int, 1, 4> message1, message2, message3, message4;
-
-    //Examples
-    message1 << 1, 0, 1, 0;  
-    message2 << 0, 1, 1, 1;  
-    message3 << 1, 1, 0, 0;  
-    message4 << 0, 0, 1, 0;  
 
 
-    Eigen::Matrix<int, 1, 7> encodedMessage1 = encoder.encodeMessage(message1);
-    Eigen::Matrix<int, 1, 7> encodedMessage2 = encoder.encodeMessage(message2);
-    Eigen::Matrix<int, 1, 7> encodedMessage3 = encoder.encodeMessage(message3);
-    Eigen::Matrix<int, 1, 7> encodedMessage4 = encoder.encodeMessage(message4);
-
-
-    std::cout << "1: ";
-    encoder.printEncodedMsg(encodedMessage1);
-    std::cout << "2: ";
-    encoder.printEncodedMsg(encodedMessage2);
-    std::cout << "3: ";
-    encoder.printEncodedMsg(encodedMessage3);
-    std::cout << "4: ";
-    encoder.printEncodedMsg(encodedMessage4);
-*/
+    /*  
+        "HELLO" ASCII values: H = 72, E = 69, L = 76, L = 76, O = 79
+        Hamming codes for HELLO
+        10011001110000
+        10011000100101
+        10011000111100
+        10011000111100
+        10011001111111
+    */

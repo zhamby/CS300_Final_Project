@@ -3,9 +3,7 @@
 
 To Do:
 
--Child class implementation 
--File read in function 
--input files
+-ErrorEncode implementation
 -Main (isEqual)
 -Check const correctness
 -Test framework
