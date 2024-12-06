@@ -49,6 +49,9 @@ void Encode::processFile() {
 
     // Process the input file character by character
     while (inputFile.get(ch)) {
+        // Skip newline characters if desired (optional, can remove this part)
+        if (ch == '\n') continue;
+
         // Convert the character to an 8-bit binary representation
         int asciiValue = static_cast<unsigned char>(ch);
         Eigen::Matrix<int, 1, 8> binary;
@@ -70,11 +73,7 @@ void Encode::processFile() {
     }
 
     // Output the encoded 7-bit messages in pairs of 7 bits
-    int messageCount = 0;
     for (size_t i = 0; i < encodedMessages.size(); i += 2) {
-        // Ensure that we don't go out of bounds
-        if (i + 1 >= encodedMessages.size()) break;
-
         Eigen::Matrix<int, 1, 7> encodedMsg1 = encodedMessages[i];
         Eigen::Matrix<int, 1, 7> encodedMsg2 = encodedMessages[i + 1];
 
@@ -87,11 +86,9 @@ void Encode::processFile() {
         }
 
         outputFile << "\n"; // Add a newline after every two 7-bit blocks (14 bits)
-        
-    } 
+    }
 
     inputFile.close();
     outputFile.close();
-
     std::cout << "Encoding complete. Output written to " + outputFileName + ".\n";
 }
