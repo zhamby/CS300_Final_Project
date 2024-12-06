@@ -88,8 +88,6 @@ class ErrorEncode : public Encode  {
 
         void encodeFile();
 
-        // Introduces an error at a specific bit
-        void errorEncodeStatic(size_t codeIndex, int bitPos);
         // Introduces a random error in each Hamming code block
         void errorEncodeRand();
 

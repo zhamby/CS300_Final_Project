@@ -8,6 +8,8 @@
 #include <iostream>
 #include <fstream>
 #include <random>
+#include <cstdlib>
+#include <ctime>
 #include "Hamming.h"
 
 
@@ -66,27 +68,18 @@ void ErrorEncode::encodeFile() {
     std::cout << "Error encoding complete. Output written to " << outputFileName << ".\n";
 }
 
-// Introduces a static error by flipping a specific bit in a given code block
-void ErrorEncode::errorEncodeStatic(size_t codeIndex, int bitPos) {
-    const auto& encodedMessages = this->getEncodedMessages();  // Use getter to access encodedMessages
-    if (codeIndex >= encodedMessages.size() || bitPos < 0 || bitPos >= 7) {
-        std::cerr << "Invalid code index or bit position" << std::endl;
-        return;
-    }
-    hammingCodeWithErrors = encodedMessages; // Copy the encoded messages
-    hammingCodeWithErrors[codeIndex](0, bitPos) ^= 1; // Flip the specific bit
-}
 
-// Introduces a random error in each Hamming code block
+// Introduces random errors in each Hamming code block
 void ErrorEncode::errorEncodeRand() {
-    auto& encodedMessages = this->getEncodedMessages();  // Now it's a reference
+    auto& encodedMessages = this->getEncodedMessages();  // Reference to encoded messages
 
     hammingCodeWithErrors.clear();
 
     for (auto& encodedMessage : encodedMessages) {
-        int bitPos = rand() % 7;
-        encodedMessage(0, bitPos) = (encodedMessage(0, bitPos) == 0) ? 1 : 0;
+        // Always introduce 1 error
+        int bitPos = rand() % 7;  // Random bit position in the block
+        encodedMessage(0, bitPos) = (encodedMessage(0, bitPos) == 0) ? 1 : 0;  // Flip the bit
 
-        hammingCodeWithErrors.push_back(encodedMessage);
+        hammingCodeWithErrors.push_back(encodedMessage);  // Add the modified message
     }
 }

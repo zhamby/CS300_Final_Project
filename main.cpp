@@ -1,10 +1,15 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 #include "Hamming.h"
 #include "Eigen/Dense"
 
 int main() {
+    // Seed the random number generator with the current time
+    std::srand(std::time(0));
+
     // Vector to store Hamming objects
     std::vector<Hamming> hammingObjects;
 
