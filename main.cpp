@@ -26,6 +26,7 @@ int main() {
  
     //Encoding testing
     Encode encoder(fileName);
+    Decode decoder("test2.txt");
 
 
 
