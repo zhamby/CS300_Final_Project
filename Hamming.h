@@ -21,14 +21,12 @@ class Hamming {
 
         void printOut();
         
-
     protected:
         Eigen::Matrix<int, 7, 4> generator;
         Eigen::Matrix<int, 3, 7> parityCheck;
         std::string fileName;
 
         virtual void processFile() = 0;
-    
 };
 
 
@@ -38,7 +36,6 @@ class Decode : public Hamming {
         Decode(std::string file);
         ~Decode();
         
-
     private:
         void processFile() override;
         
@@ -49,6 +46,8 @@ class Decode : public Hamming {
         char matrixToChar(const Eigen::Matrix<int, 1, 4>& data);
         Eigen::Matrix<int, 1, 7> correctBlock(const Eigen::Matrix<int, 1, 7>& block);
         char byteToChar(const Eigen::Matrix<int, 1, 8>& data) const;
+        char combineDataAndConvertToChar(const Eigen::Matrix<int, 1, 4>& data1, const Eigen::Matrix<int, 1, 4>& data2);
+        std::pair<Eigen::Matrix<int, 1, 4>, Eigen::Matrix<int, 1, 4>> parseAndCorrectBlock(const std::string& line);
 };  
 
 
@@ -66,6 +65,9 @@ class Encode : public Hamming {
 
     private:
         void processFile() override;
+        std::string getOriginalMessage(const std::string& fileName);
+        std::pair<Eigen::Matrix<int, 1, 4>, Eigen::Matrix<int, 1, 4>> splitBinary(const Eigen::Matrix<int, 1, 8>& binary);
+        Eigen::Matrix<int, 1, 8> charToBinary(char ch);
 };
 
 class ErrorEncode : public Encode  {
