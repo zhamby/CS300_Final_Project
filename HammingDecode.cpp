@@ -26,12 +26,16 @@ void Decode::processFile() {
         return;
     }
 
-    std::ofstream outputFile(fileName + "_out.txt", std::ios::out | std::ios::trunc);
+    // Remove the ".txt" extension from the original file name
+    std::string outputFileName = fileName.substr(0, fileName.find_last_of('.')) + "_out.txt";
+    
+    std::ofstream outputFile(outputFileName, std::ios::out | std::ios::trunc);
     if (!outputFile.is_open()) {
         std::cerr << "Error creating output file." << std::endl;
         inputFile.close();
         return;
     }
+
 
     std::string line;
     while (std::getline(inputFile, line)) {
@@ -67,7 +71,7 @@ void Decode::processFile() {
 
     inputFile.close();
     outputFile.close();
-    std::cout << "Decoding complete. Output written to 'decoded_output.txt'.\n";
+    std::cout << "Decoding complete. Output written to " << outputFileName << ".\n";
 }
 
 

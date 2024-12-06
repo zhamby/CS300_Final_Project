@@ -22,12 +22,12 @@ int main() {
     }
 */
 
-    std::string fileName = "test1.txt";
+    std::string eFileName = "test1.txt";
+    std::string dFileName = "test2.txt";
  
     //Encoding testing
-    Encode encoder(fileName);
-    Decode decoder("test2.txt");
-
+    Encode encoder(eFileName);  
+    Decode decoder(dFileName);  
 
 
     return 0;
