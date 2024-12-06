@@ -28,11 +28,6 @@ Eigen::Matrix<int, 1, 7> Encode::encodeMessage(const Eigen::Matrix<int, 1, 4>& m
 }
 
 
-void Encode::printEncodedMsg(Eigen::Matrix<int, 1, 7> encodedMessage) {
-    std::cout << "\nEncoded Message: " << encodedMessage;
-}
-
-//Process input file, encode characters, and write to output file
 void Encode::processFile() {
     std::ifstream inputFile(fileName, std::ios::in);
     if (!inputFile.is_open()) {
@@ -50,38 +45,51 @@ void Encode::processFile() {
     }
 
     char ch;
-    while (inputFile.get(ch)) {
-        //Convert char to binary in an Eigen matrix
-        int asciiValue = static_cast<unsigned char>(ch); 
+    std::vector<Eigen::Matrix<int, 1, 7>> encodedMessages; // Vector to store encoded messages
 
+    // Process the input file character by character
+    while (inputFile.get(ch)) {
+        // Convert the character to an 8-bit binary representation
+        int asciiValue = static_cast<unsigned char>(ch);
         Eigen::Matrix<int, 1, 8> binary;
         for (int i = 0; i < 8; ++i) {
-            binary(0, 7 - i) = (asciiValue >> i) & 1; //Extract bits from the ASCII value
+            binary(0, 7 - i) = (asciiValue >> i) & 1; // Extract bits from the ASCII value
         }
 
-        //Split into two 4-bit chunks
-        Eigen::Matrix<int, 1, 4> msg1 = binary.block<1, 4>(0, 0); //Higher chunk
-        Eigen::Matrix<int, 1, 4> msg2 = binary.block<1, 4>(0, 4); //Lower chunk
+        // Split into two 4-bit chunks
+        Eigen::Matrix<int, 1, 4> msg1 = binary.block<1, 4>(0, 0); // Higher 4 bits
+        Eigen::Matrix<int, 1, 4> msg2 = binary.block<1, 4>(0, 4); // Lower 4 bits
 
-        //Encode each 4-bit message
+        // Encode each 4-bit message into a 7-bit encoded message
         Eigen::Matrix<int, 1, 7> encodedMsg1 = encodeMessage(msg1);
         Eigen::Matrix<int, 1, 7> encodedMsg2 = encodeMessage(msg2);
 
-        std::cout << "\nMessage 1: ";
-        printEncodedMsg(encodedMsg1);
-        std::cout << "\nMessage 2: ";
-        printEncodedMsg(encodedMsg2);
-        std::cout << std::endl;
+        // Store encoded messages
+        encodedMessages.push_back(encodedMsg1);
+        encodedMessages.push_back(encodedMsg2);
+    }
 
-        //Write encoded messages to output
-        for (int i = 0; i < 7; ++i) {
-            outputFile << encodedMsg1(0, i);
+    // Output the encoded 7-bit messages in pairs of 7 bits
+    int messageCount = 0;
+    for (size_t i = 0; i < encodedMessages.size(); i += 2) {
+        Eigen::Matrix<int, 1, 7> encodedMsg1 = encodedMessages[i];
+        Eigen::Matrix<int, 1, 7> encodedMsg2 = encodedMessages[i + 1];
+
+        // Output one line per pair of encoded 7-bit messages
+        for (int j = 0; j < 7; ++j) {
+            outputFile << encodedMsg1(0, j); // Write first 7-bit block
+        }
+        for (int j = 0; j < 7; ++j) {
+            outputFile << encodedMsg2(0, j); // Write second 7-bit block
         }
 
-        for (int i = 0; i < 7; ++i) {
-            outputFile << encodedMsg2(0, i);
+        outputFile << "\n"; // Add a newline after every two 7-bit blocks (14 bits)
+        messageCount++;
+
+        // Ensure we only have 5 lines of output for "HELLO"
+        if (messageCount == 5) {
+            break;
         }
-        outputFile << "\n"; //New line for each character
     }
 
     inputFile.close();

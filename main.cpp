@@ -23,7 +23,7 @@ int main() {
 */
 
     std::string eFileName = "test1.txt";
-    std::string dFileName = "test2.txt";
+    std::string dFileName = "test1_out.txt";
  
     //Encoding testing
     Encode encoder(eFileName);  

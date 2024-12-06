@@ -27,7 +27,7 @@ void Decode::processFile() {
     }
 
     // Remove the ".txt" extension from the original file name
-    std::string outputFileName = fileName.substr(0, fileName.find_last_of('.')) + "_out.txt";
+    std::string outputFileName = fileName.substr(0, fileName.find_last_of('.')) + "_decoded.txt";
     
     std::ofstream outputFile(outputFileName, std::ios::out | std::ios::trunc);
     if (!outputFile.is_open()) {
@@ -37,10 +37,11 @@ void Decode::processFile() {
     }
 
 
+
     std::string line;
     while (std::getline(inputFile, line)) {
-
         std::vector<int> bits = parseLineToBits(line);
+
 
         // Debugging: print parsed bits
         std::cout << "Parsed bits: ";
@@ -49,14 +50,18 @@ void Decode::processFile() {
         }
         std::cout << std::endl;
 
+        // Ensure that we have exactly 14 bits per line (two 7-bit blocks)
+        if (bits.size() != 14) {
+            std::cerr << "Error: Expected 14 bits per line. Line has " << bits.size() << " bits." << std::endl;
+            continue; // Skip the line if it doesn't have exactly 14 bits
+        }
 
         // Process each 7-bit block
-        for (size_t i = 0; i + 7 <= bits.size(); i += 7) {
+        for (size_t i = 0; i < 14; i += 7) {
             Eigen::Matrix<int, 1, 7> receivedBlock;
             for (int j = 0; j < 7; ++j) {
                 receivedBlock(0, j) = bits[i + j];
             }
-
 
             // Debugging: print received 7-bit block
             std::cout << "Received block: ";
@@ -64,7 +69,6 @@ void Decode::processFile() {
                 std::cout << receivedBlock(0, j);
             }
             std::cout << std::endl;
-
 
             // Decode the 7-bit block
             int errorPosition = checkParity(receivedBlock);
@@ -80,7 +84,6 @@ void Decode::processFile() {
             // Extract the original 4-bit data
             Eigen::Matrix<int, 1, 4> decodedData = extractData(receivedBlock);
 
-
             // Debugging: print extracted 4-bit data
             std::cout << "Extracted 4-bit data: ";
             for (int i = 0; i < 4; ++i) {
@@ -88,19 +91,14 @@ void Decode::processFile() {
             }
             std::cout << std::endl;
 
-
             // Convert 4-bit block back to character
             char decodedChar = matrixToChar(decodedData);
-            std::cout << "Decoded Char: " << decodedChar << std::endl; // Debugging output
-            outputFile << decodedChar;
-    
 
-            if (decodedChar != '\0') {
-                outputFile << decodedChar;
-            }
+            std::cout << "Decoded Char: " << decodedChar << std::endl; // Debugging output
+            
+            outputFile << decodedChar;
         }
     }
-
 
     inputFile.close();
     outputFile.close();
@@ -129,27 +127,30 @@ int Decode::checkParity(const Eigen::Matrix<int, 1, 7>& block) const {
 }
 
 // Extract the original 4-bit data from the corrected 7-bit block
-Eigen::Matrix<int, 1, 4> Decode::extractData(const Eigen::Matrix<int, 1, 7>& block) const {
+Eigen::Matrix<int, 1, 4> Decode::extractData(const Eigen::Matrix<int, 1, 7>& receivedBlock) {
     Eigen::Matrix<int, 1, 4> data;
-    data(0, 0) = block(0, 2);
-    data(0, 1) = block(0, 4);
-    data(0, 2) = block(0, 5);
-    data(0, 3) = block(0, 6);
+    
+    // Correctly extract data bits from positions 3, 5, 6, 7
+    data(0, 0) = receivedBlock(0, 2); // 3rd position
+    data(0, 1) = receivedBlock(0, 4); // 5th position
+    data(0, 2) = receivedBlock(0, 5); // 6th position
+    data(0, 3) = receivedBlock(0, 6); // 7th position
+    
     return data;
 }
 
 // Convert a 4-bit Eigen::Matrix to a character
 char Decode::matrixToChar(const Eigen::Matrix<int, 1, 4>& data) const {
-    int value = 0;
-    for (int i = 0; i < 4; ++i) {
-        value = (value << 1) | data(0, i);
-    }
+    
+    // Combine the 4 bits into a single value
+    int charValue = data(0, 0) * 8 + data(0, 1) * 4 + data(0, 2) * 2 + data(0, 3);
+
     // Debugging: print the integer value before converting to char
-    std::cout << "Decoded 4-bit value (int): " << value << std::endl;
+    std::cout << "Decoded 4-bit value (int): " << charValue << std::endl;
 
     // Check if value corresponds to printable ASCII characters (between 32 and 126)
-    if (value >= 32 && value <= 126) {
-        return static_cast<char>(value);
+    if (charValue >= 32 && charValue <= 126) {
+        return static_cast<char>(charValue);
     } else {
         return '\0';  // Return null character if not a printable ASCII character
     }
