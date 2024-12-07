@@ -3,7 +3,6 @@
 
 To Do:
 
--ErrorEncode implementation
 -Main (isEqual)
 -Check const correctness
 -Test framework
@@ -14,3 +13,5 @@ Hamming calculator:
 https://www.dcode.fr/hamming-error-correction 
 
 
+Doxygen:
+https://congenial-system-q7pq779wpw593gp7-8000.app.github.dev/classHamming.html

@@ -1,0 +1,104 @@
+\doxysection{Error\+Encode Class Reference}
+\hypertarget{classErrorEncode}{}\label{classErrorEncode}\index{ErrorEncode@{ErrorEncode}}
+
+
+Derived class for encoding \doxylink{classHamming}{Hamming} codes with introduced errors.  
+
+
+
+
+{\ttfamily \#include $<$Hamming.\+h$>$}
+
+Inheritance diagram for Error\+Encode\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classErrorEncode}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classErrorEncode_acc9a2c54d4f55bd5b38107937aca9d28}{Error\+Encode}} (std\+::string file)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classErrorEncode}{Error\+Encode} class. \end{DoxyCompactList}\item 
+\Hypertarget{classErrorEncode_ad19b720f33a2d9bd98756d107ab084cd}\label{classErrorEncode_ad19b720f33a2d9bd98756d107ab084cd} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Error\+Encode} ()
+\begin{DoxyCompactList}\small\item\em Destructor for \doxylink{classErrorEncode}{Error\+Encode} class. \end{DoxyCompactList}\item 
+\Hypertarget{classErrorEncode_a2c093760a36ec99ba618a4e2f2a632c4}\label{classErrorEncode_a2c093760a36ec99ba618a4e2f2a632c4} 
+void {\bfseries encode\+File} ()
+\begin{DoxyCompactList}\small\item\em Encodes the file and introduces errors. \end{DoxyCompactList}\item 
+\Hypertarget{classErrorEncode_a329d549e74f73a34b7ca8549b3331873}\label{classErrorEncode_a329d549e74f73a34b7ca8549b3331873} 
+void {\bfseries error\+Encode\+Rand} ()
+\begin{DoxyCompactList}\small\item\em Introduces a random error in each \doxylink{classHamming}{Hamming} code block. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classEncode}{Encode}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classEncode_a7b5e97a0ecf0fb3a0a3464afac16df8c}{Encode}} (std\+::string file)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classEncode}{Encode} class. \end{DoxyCompactList}\item 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Encode} ()
+\begin{DoxyCompactList}\small\item\em Destructor for \doxylink{classEncode}{Encode} class. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix$<$ int, 1, 7 $>$ \mbox{\hyperlink{classEncode_ad47b2f9511e89801877896197852785a}{encode\+Message}} (const Eigen\+::\+Matrix$<$ int, 1, 4 $>$ \&message) const
+\begin{DoxyCompactList}\small\item\em Encodes a 4-\/bit message into a 7-\/bit \doxylink{classHamming}{Hamming} code. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classEncode_abb35cd12cde1f470290274dd25b7ad37}{print\+Encoded\+Msg}} (const Eigen\+::\+Matrix$<$ int, 1, 7 $>$ \&encoded\+Message) const
+\begin{DoxyCompactList}\small\item\em Prints the encoded message. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classHamming}{Hamming}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classHamming_ac7e84cce189a12f5c61b3a43357a5f76}{Hamming}} (std\+::string file)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classHamming}{Hamming} class. \end{DoxyCompactList}\item 
+virtual {\bfseries \texorpdfstring{$\sim$}{\string~}\+Hamming} ()
+\begin{DoxyCompactList}\small\item\em Destructor for \doxylink{classHamming}{Hamming} class. \end{DoxyCompactList}\item 
+void {\bfseries print\+Out} ()
+\begin{DoxyCompactList}\small\item\em Prints the output of the encoding/decoding process. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classEncode}{Encode}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classEncode_a0b469a34d0e2e48ddec7b2632a275f58}{process\+File}} () override
+\begin{DoxyCompactList}\small\item\em Processes the file for encoding. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classEncode_aa330342a93d48c358bc0acfa77223a90}{get\+Original\+Message}} (const std\+::string \&\mbox{\hyperlink{classHamming_a7161d1f71f5c512ecef0b98839839a27}{file\+Name}}) const
+\begin{DoxyCompactList}\small\item\em Retrieves the original message from a file. \end{DoxyCompactList}\item 
+std\+::pair$<$ Eigen\+::\+Matrix$<$ int, 1, 4 $>$, Eigen\+::\+Matrix$<$ int, 1, 4 $>$ $>$ \mbox{\hyperlink{classEncode_a43412552a6e471daccc9c453bbf88130}{split\+Binary}} (const Eigen\+::\+Matrix$<$ int, 1, 8 $>$ \&binary) const
+\begin{DoxyCompactList}\small\item\em Splits an 8-\/bit binary matrix into two 4-\/bit parts. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix$<$ int, 1, 8 $>$ \mbox{\hyperlink{classEncode_ae8a56f4cd1ddca6a32c2b54aac047677}{char\+To\+Binary}} (char ch) const
+\begin{DoxyCompactList}\small\item\em Converts a character to its binary representation. \end{DoxyCompactList}\item 
+std\+::vector$<$ Eigen\+::\+Matrix$<$ int, 1, 7 $>$ $>$ \& \mbox{\hyperlink{classEncode_a1f01385a0cc6b9f8bf215b36a33ce9fe}{get\+Encoded\+Messages}} ()
+\begin{DoxyCompactList}\small\item\em Getter for encoded messages. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classHamming}{Hamming}}}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classHamming}{Hamming}}}
+\begin{DoxyCompactItemize}
+\item 
+Eigen\+::\+Matrix$<$ int, 7, 4 $>$ {\bfseries generator}
+\begin{DoxyCompactList}\small\item\em \doxylink{classHamming}{Hamming} generator matrix (7x4) \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix$<$ int, 3, 7 $>$ {\bfseries parity\+Check}
+\begin{DoxyCompactList}\small\item\em \doxylink{classHamming}{Hamming} parity check matrix (3x7) \end{DoxyCompactList}\item 
+std\+::string {\bfseries file\+Name}
+\begin{DoxyCompactList}\small\item\em Name of the file being processed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Derived class for encoding \doxylink{classHamming}{Hamming} codes with introduced errors. 
+
+This class encodes messages and introduces random errors in the encoded blocks. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classErrorEncode_acc9a2c54d4f55bd5b38107937aca9d28}\index{ErrorEncode@{ErrorEncode}!ErrorEncode@{ErrorEncode}}
+\index{ErrorEncode@{ErrorEncode}!ErrorEncode@{ErrorEncode}}
+\doxysubsubsection{\texorpdfstring{ErrorEncode()}{ErrorEncode()}}
+{\footnotesize\ttfamily \label{classErrorEncode_acc9a2c54d4f55bd5b38107937aca9d28} 
+Error\+Encode\+::\+Error\+Encode (\begin{DoxyParamCaption}\item[{std\+::string}]{file}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classErrorEncode}{Error\+Encode} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & The name of the file to encode. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Hamming.\+h\item 
+Hamming\+Error\+Encode.\+cpp\end{DoxyCompactItemize}

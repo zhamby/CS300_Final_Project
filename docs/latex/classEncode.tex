@@ -1,0 +1,208 @@
+\doxysection{Encode Class Reference}
+\hypertarget{classEncode}{}\label{classEncode}\index{Encode@{Encode}}
+
+
+Derived class for encoding \doxylink{classHamming}{Hamming} codes.  
+
+
+
+
+{\ttfamily \#include $<$Hamming.\+h$>$}
+
+Inheritance diagram for Encode\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classEncode}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classEncode_a7b5e97a0ecf0fb3a0a3464afac16df8c}{Encode}} (std\+::string file)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classEncode}{Encode} class. \end{DoxyCompactList}\item 
+\Hypertarget{classEncode_a6efb60d601aae7d8794d3c44c27088d5}\label{classEncode_a6efb60d601aae7d8794d3c44c27088d5} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Encode} ()
+\begin{DoxyCompactList}\small\item\em Destructor for \doxylink{classEncode}{Encode} class. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix$<$ int, 1, 7 $>$ \mbox{\hyperlink{classEncode_ad47b2f9511e89801877896197852785a}{encode\+Message}} (const Eigen\+::\+Matrix$<$ int, 1, 4 $>$ \&message) const
+\begin{DoxyCompactList}\small\item\em Encodes a 4-\/bit message into a 7-\/bit \doxylink{classHamming}{Hamming} code. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classEncode_abb35cd12cde1f470290274dd25b7ad37}{print\+Encoded\+Msg}} (const Eigen\+::\+Matrix$<$ int, 1, 7 $>$ \&encoded\+Message) const
+\begin{DoxyCompactList}\small\item\em Prints the encoded message. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classHamming}{Hamming}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classHamming_ac7e84cce189a12f5c61b3a43357a5f76}{Hamming}} (std\+::string file)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classHamming}{Hamming} class. \end{DoxyCompactList}\item 
+virtual {\bfseries \texorpdfstring{$\sim$}{\string~}\+Hamming} ()
+\begin{DoxyCompactList}\small\item\em Destructor for \doxylink{classHamming}{Hamming} class. \end{DoxyCompactList}\item 
+void {\bfseries print\+Out} ()
+\begin{DoxyCompactList}\small\item\em Prints the output of the encoding/decoding process. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classEncode_a0b469a34d0e2e48ddec7b2632a275f58}{process\+File}} () override
+\begin{DoxyCompactList}\small\item\em Processes the file for encoding. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classEncode_aa330342a93d48c358bc0acfa77223a90}{get\+Original\+Message}} (const std\+::string \&\mbox{\hyperlink{classHamming_a7161d1f71f5c512ecef0b98839839a27}{file\+Name}}) const
+\begin{DoxyCompactList}\small\item\em Retrieves the original message from a file. \end{DoxyCompactList}\item 
+std\+::pair$<$ Eigen\+::\+Matrix$<$ int, 1, 4 $>$, Eigen\+::\+Matrix$<$ int, 1, 4 $>$ $>$ \mbox{\hyperlink{classEncode_a43412552a6e471daccc9c453bbf88130}{split\+Binary}} (const Eigen\+::\+Matrix$<$ int, 1, 8 $>$ \&binary) const
+\begin{DoxyCompactList}\small\item\em Splits an 8-\/bit binary matrix into two 4-\/bit parts. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix$<$ int, 1, 8 $>$ \mbox{\hyperlink{classEncode_ae8a56f4cd1ddca6a32c2b54aac047677}{char\+To\+Binary}} (char ch) const
+\begin{DoxyCompactList}\small\item\em Converts a character to its binary representation. \end{DoxyCompactList}\item 
+std\+::vector$<$ Eigen\+::\+Matrix$<$ int, 1, 7 $>$ $>$ \& \mbox{\hyperlink{classEncode_a1f01385a0cc6b9f8bf215b36a33ce9fe}{get\+Encoded\+Messages}} ()
+\begin{DoxyCompactList}\small\item\em Getter for encoded messages. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classHamming}{Hamming}}}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classHamming}{Hamming}}}
+\begin{DoxyCompactItemize}
+\item 
+Eigen\+::\+Matrix$<$ int, 7, 4 $>$ {\bfseries generator}
+\begin{DoxyCompactList}\small\item\em \doxylink{classHamming}{Hamming} generator matrix (7x4) \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix$<$ int, 3, 7 $>$ {\bfseries parity\+Check}
+\begin{DoxyCompactList}\small\item\em \doxylink{classHamming}{Hamming} parity check matrix (3x7) \end{DoxyCompactList}\item 
+std\+::string {\bfseries file\+Name}
+\begin{DoxyCompactList}\small\item\em Name of the file being processed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Derived class for encoding \doxylink{classHamming}{Hamming} codes. 
+
+This class handles the encoding of files using the \doxylink{classHamming}{Hamming} algorithm. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classEncode_a7b5e97a0ecf0fb3a0a3464afac16df8c}\index{Encode@{Encode}!Encode@{Encode}}
+\index{Encode@{Encode}!Encode@{Encode}}
+\doxysubsubsection{\texorpdfstring{Encode()}{Encode()}}
+{\footnotesize\ttfamily \label{classEncode_a7b5e97a0ecf0fb3a0a3464afac16df8c} 
+Encode\+::\+Encode (\begin{DoxyParamCaption}\item[{std\+::string}]{file}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classEncode}{Encode} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & The name of the file to encode. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classEncode_ae8a56f4cd1ddca6a32c2b54aac047677}\index{Encode@{Encode}!charToBinary@{charToBinary}}
+\index{charToBinary@{charToBinary}!Encode@{Encode}}
+\doxysubsubsection{\texorpdfstring{charToBinary()}{charToBinary()}}
+{\footnotesize\ttfamily \label{classEncode_ae8a56f4cd1ddca6a32c2b54aac047677} 
+Eigen\+::\+Matrix$<$ int, 1, 8 $>$ Encode\+::char\+To\+Binary (\begin{DoxyParamCaption}\item[{char}]{ch}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Converts a character to its binary representation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ch} & The character to convert. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An 8-\/bit binary matrix. 
+\end{DoxyReturn}
+\Hypertarget{classEncode_ad47b2f9511e89801877896197852785a}\index{Encode@{Encode}!encodeMessage@{encodeMessage}}
+\index{encodeMessage@{encodeMessage}!Encode@{Encode}}
+\doxysubsubsection{\texorpdfstring{encodeMessage()}{encodeMessage()}}
+{\footnotesize\ttfamily \label{classEncode_ad47b2f9511e89801877896197852785a} 
+Eigen\+::\+Matrix$<$ int, 1, 7 $>$ Encode\+::encode\+Message (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix$<$ int, 1, 4 $>$ \&}]{message}{}\end{DoxyParamCaption}) const}
+
+
+
+Encodes a 4-\/bit message into a 7-\/bit \doxylink{classHamming}{Hamming} code. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The 4-\/bit message to encode. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A 7-\/bit encoded message. 
+\end{DoxyReturn}
+\Hypertarget{classEncode_a1f01385a0cc6b9f8bf215b36a33ce9fe}\index{Encode@{Encode}!getEncodedMessages@{getEncodedMessages}}
+\index{getEncodedMessages@{getEncodedMessages}!Encode@{Encode}}
+\doxysubsubsection{\texorpdfstring{getEncodedMessages()}{getEncodedMessages()}}
+{\footnotesize\ttfamily \label{classEncode_a1f01385a0cc6b9f8bf215b36a33ce9fe} 
+std\+::vector$<$ Eigen\+::\+Matrix$<$ int, 1, 7 $>$ $>$ \& Encode\+::get\+Encoded\+Messages (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Getter for encoded messages. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the vector of encoded messages. 
+\end{DoxyReturn}
+\Hypertarget{classEncode_aa330342a93d48c358bc0acfa77223a90}\index{Encode@{Encode}!getOriginalMessage@{getOriginalMessage}}
+\index{getOriginalMessage@{getOriginalMessage}!Encode@{Encode}}
+\doxysubsubsection{\texorpdfstring{getOriginalMessage()}{getOriginalMessage()}}
+{\footnotesize\ttfamily \label{classEncode_aa330342a93d48c358bc0acfa77223a90} 
+std\+::string Encode\+::get\+Original\+Message (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{file\+Name}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Retrieves the original message from a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & The name of the file containing the message. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The original message. 
+\end{DoxyReturn}
+\Hypertarget{classEncode_abb35cd12cde1f470290274dd25b7ad37}\index{Encode@{Encode}!printEncodedMsg@{printEncodedMsg}}
+\index{printEncodedMsg@{printEncodedMsg}!Encode@{Encode}}
+\doxysubsubsection{\texorpdfstring{printEncodedMsg()}{printEncodedMsg()}}
+{\footnotesize\ttfamily \label{classEncode_abb35cd12cde1f470290274dd25b7ad37} 
+void Encode\+::print\+Encoded\+Msg (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix$<$ int, 1, 7 $>$ \&}]{encoded\+Message}{}\end{DoxyParamCaption}) const}
+
+
+
+Prints the encoded message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em encoded\+Message} & The 7-\/bit encoded message. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classEncode_a0b469a34d0e2e48ddec7b2632a275f58}\index{Encode@{Encode}!processFile@{processFile}}
+\index{processFile@{processFile}!Encode@{Encode}}
+\doxysubsubsection{\texorpdfstring{processFile()}{processFile()}}
+{\footnotesize\ttfamily \label{classEncode_a0b469a34d0e2e48ddec7b2632a275f58} 
+void Encode\+::process\+File (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Processes the file for encoding. 
+
+
+
+Implements \mbox{\hyperlink{classHamming_aaf19549328eca5e6fdb60a3c6f887ec9}{Hamming}}.
+
+\Hypertarget{classEncode_a43412552a6e471daccc9c453bbf88130}\index{Encode@{Encode}!splitBinary@{splitBinary}}
+\index{splitBinary@{splitBinary}!Encode@{Encode}}
+\doxysubsubsection{\texorpdfstring{splitBinary()}{splitBinary()}}
+{\footnotesize\ttfamily \label{classEncode_a43412552a6e471daccc9c453bbf88130} 
+std\+::pair$<$ Eigen\+::\+Matrix$<$ int, 1, 4 $>$, Eigen\+::\+Matrix$<$ int, 1, 4 $>$ $>$ Encode\+::split\+Binary (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix$<$ int, 1, 8 $>$ \&}]{binary}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Splits an 8-\/bit binary matrix into two 4-\/bit parts. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em binary} & The 8-\/bit binary matrix. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pair of 4-\/bit matrices. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Hamming.\+h\item 
+Hamming\+Encode.\+cpp\end{DoxyCompactItemize}
