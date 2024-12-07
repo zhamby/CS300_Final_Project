@@ -7,61 +7,22 @@
 #include "Eigen/Dense"
 
 int main() {
-    // Seed the random number generator with the current time
-    std::srand(std::time(0));
+    for (int i = 1; i <= 2; ++i) {
+        // Generate Filename
+        std::string fileName = "test" + std::to_string(i);
+        
+        //Create objects to test Encode, Error Encode, and Decoding
+        std::cout << "________ 1. Start Encoder ________\n";
+        Encode encoder1(fileName + ".txt");  
 
-    // Vector to store Hamming objects
-    std::vector<Hamming> hammingObjects;
+        std::cout << "_____ 2. Start Error Encoder _____\n";
+        ErrorEncode errorEncode2(fileName + ".txt"); //also calls Encode processFile()
 
-
-/*
-    // Populate 15 filenames and create Hamming objects
-    for (int i = 1; i <= 15; ++i) {
-        std::string fileName = "test" + std::to_string(i) + ".txt";
-        hammingObjects.emplace_back(fileName); // Construct Hamming object with the filename
+        std::cout << "________ 3. Start Decoder ________\n";
+        Decode decode3(fileName + "_out.txt");
+        
+        std::cout << "____ 4. Start Decoder (ERROR) ____\n";
+        Decode decode4(fileName + "_e_out.txt");
     }
-
-    //Hamming object testing
-    for (const auto& hamming : hammingObjects) {
-        hamming.printOut(); //testing
-    }
-*/
-
-
-    std::string eFileName = "test1.txt";  // The original message file
-
-    // Encoding with error introduction
-    ErrorEncode errorEncoder(eFileName);
-
-    Decode decoder(eFileName);
-
-
-
-
     return 0;
 }
-
-
-
-
-    /*  
-        "HELLO" ASCII values: H = 72, E = 69, L = 76, L = 76, O = 79
-        Hamming codes for HELLO:
-            10011001110000
-            10011000100101
-            10011000111100
-            10011000111100
-            10011001111111
-
-
-
-        Working test:
-            std::string eFileName = "test1.txt";
-            std::string dFileName = "test1_out.txt";
-        
-            //Encoding testing
-            Encode encoder(eFileName);  
-            Decode decoder(dFileName);  
-
-
-    */

@@ -19,34 +19,27 @@ Decode::~Decode() {}
 
 
 void Decode::processFile() {
-    // Open the "out" file (test1_out.txt) and the "errors" file (test1_errors.txt)
-    std::ifstream outFile(fileName.substr(0, fileName.find_last_of('.')) + "_out.txt", std::ios::in);
+    // Open the input file specified by the `fileName` variable
+    std::ifstream inputFile(fileName, std::ios::in);
+    if (!inputFile.is_open()) {
+        std::cerr << "Error opening file: " << fileName << std::endl;
+        return;
+    }
+
+    // Create the "_out.txt" filename by removing ".txt" from `fileName` and appending "_out.txt"
+    std::string outFileName = fileName.substr(0, fileName.find_last_of('.')) + "_decoded.txt";
+    std::ofstream outFile(outFileName, std::ios::out);
     if (!outFile.is_open()) {
-        std::cerr << "Error opening file: " << fileName.substr(0, fileName.find_last_of('.')) + "_out.txt" << std::endl;
-        return;
-    }
-
-    std::ifstream errorFile(fileName.substr(0, fileName.find_last_of('.')) + "_errors.txt", std::ios::in);
-    if (!errorFile.is_open()) {
-        std::cerr << "Error opening file: " << fileName.substr(0, fileName.find_last_of('.')) + "_errors.txt" << std::endl;
-        outFile.close();
-        return;
-    }
-
-    // Open the output file for decoded content (write only the errors to the decoded file)
-    std::ofstream decodedFile(fileName.substr(0, fileName.find_last_of('.')) + "_decoded.txt", std::ios::out | std::ios::trunc);
-    if (!decodedFile.is_open()) {
-        std::cerr << "Error creating output file." << std::endl;
-        outFile.close();
-        errorFile.close();
+        std::cerr << "Error opening file: " << outFileName << std::endl;
+        inputFile.close();
         return;
     }
 
     std::string line;
-    
-    // Decode and print content of the "out" file (for terminal display)
-    std::cout << "Decoding content of the out file:" << std::endl;
-    while (std::getline(outFile, line)) {
+/*
+    // Decode and print content of the input file 
+    std::cout << "Decoding content of the input file:" << std::endl;
+    while (std::getline(inputFile, line)) {
         if (line.length() != 14) {
             std::cerr << "Error: Expected 14 bits per line in out file. Line has " << line.length() << " bits." << std::endl;
             continue;
@@ -68,11 +61,10 @@ void Decode::processFile() {
         
         std::cout << "Binary: " << binaryString << " -> ASCII: " << decodedChar << std::endl;
     }
-
-    std::cout << "\nDecoding content of the errors file:" << std::endl;
-    while (std::getline(errorFile, line)) {
+*/
+    while (std::getline(inputFile, line)) {
         if (line.length() != 14) {
-            std::cerr << "Error: Expected 14 bits per line in errors file. Line has " << line.length() << " bits." << std::endl;
+            std::cerr << "Error: Expected 14 bits per line in the file. Line has " << line.length() << " bits." << std::endl;
             continue;
         }
 
@@ -95,12 +87,11 @@ void Decode::processFile() {
         std::cout << "Binary: " << binaryString << " -> ASCII: " << decodedChar << std::endl;
 
         // Write the decoded character to the output file (this is the only file written to)
-        decodedFile << decodedChar;
+        outFile << decodedChar;
     }
 
     outFile.close();
-    errorFile.close();
-    decodedFile.close();
+    inputFile.close();
     std::cout << "Decoding complete. Output written to " << fileName.substr(0, fileName.find_last_of('.')) + "_decoded.txt" << ".\n";
 }
 

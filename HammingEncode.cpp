@@ -25,9 +25,9 @@ void Encode::processFile() {
     std::cout << "Original Message: " << originalMessage << std::endl;
 
     // Remove the ".txt" extension from the original file name
-    std::string outputFileName = fileName.substr(0, fileName.find_last_of('.')) + "_out.txt";
+    std::string outFileName = fileName.substr(0, fileName.find_last_of('.')) + "_out.txt";
     
-    std::ofstream outputFile(outputFileName, std::ios::out | std::ios::trunc);
+    std::ofstream outputFile(outFileName, std::ios::out);
     if (!outputFile.is_open()) {
         std::cerr << "Error creating output file" << std::endl;
         return;
@@ -74,7 +74,7 @@ void Encode::processFile() {
 
     inputFile.close();
     outputFile.close();
-    std::cout << "Encoding complete. Output written to " + outputFileName + ".\n";
+    std::cout << "Encoding complete. Output written to " + outFileName + ".\n";
 }
 
 //Encode a 4-bit message into a 7-bit hamming code

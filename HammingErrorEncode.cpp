@@ -35,8 +35,8 @@ void ErrorEncode::encodeFile() {
         return;
     }
 
-    // Now output to errors.txt
-    std::string outputFileName = fileName.substr(0, fileName.find_last_of('.')) + "_errors.txt";
+    // Now output to fileName_e_out.txt
+    std::string outputFileName = fileName.substr(0, fileName.find_last_of('.')) + "_e_out.txt";
     std::ofstream outputFile(outputFileName, std::ios::out | std::ios::trunc);
     if (!outputFile.is_open()) {
         std::cerr << "Error creating output file" << std::endl;
