@@ -107,7 +107,7 @@ void Decode::processFile() {
 
 
 // Parse a line of binary text into a vector of integers
-std::vector<int> Decode::parseLineToBits(const std::string& line) {
+std::vector<int> Decode::parseLineToBits(const std::string& line) const {
     std::vector<int> bits;
     for (char c : line) {
         if (c == '0' || c == '1') {
@@ -118,7 +118,7 @@ std::vector<int> Decode::parseLineToBits(const std::string& line) {
 }
 
 // Extract the original 4-bit data from the corrected 7-bit block
-Eigen::Matrix<int, 1, 4> Decode::extractData(const Eigen::Matrix<int, 1, 7>& receivedBlock) {
+Eigen::Matrix<int, 1, 4> Decode::extractData(const Eigen::Matrix<int, 1, 7>& receivedBlock) const {
     Eigen::Matrix<int, 1, 4> data;
     
     //Correctly extract data bits from positions 3, 5, 6, 7
@@ -142,7 +142,7 @@ int Decode::checkParity(const Eigen::Matrix<int, 1, 7>& block) const {
 
 
 //Helper functions
-Eigen::Matrix<int, 1, 7> Decode::correctBlock(const Eigen::Matrix<int, 1, 7>& block) {
+Eigen::Matrix<int, 1, 7> Decode::correctBlock(const Eigen::Matrix<int, 1, 7>& block) const {
     Eigen::Matrix<int, 1, 7> correctedBlock = block;
     int errorPosition = checkParity(block);
 
@@ -168,7 +168,7 @@ char Decode::byteToChar(const Eigen::Matrix<int, 1, 8>& data) const {
 }
 
 // Helper to parse and correct blocks, returning two 4-bit data matrices
-std::pair<Eigen::Matrix<int, 1, 4>, Eigen::Matrix<int, 1, 4>> Decode::parseAndCorrectBlock(const std::string& line) {
+std::pair<Eigen::Matrix<int, 1, 4>, Eigen::Matrix<int, 1, 4>> Decode::parseAndCorrectBlock(const std::string& line) const {
     std::vector<int> bits = parseLineToBits(line); // Parse line into bits
     if (bits.size() != 14) {
         std::cerr << "Error: Expected 14 bits per line. Line has " << bits.size() << " bits." << std::endl;
@@ -195,7 +195,7 @@ std::pair<Eigen::Matrix<int, 1, 4>, Eigen::Matrix<int, 1, 4>> Decode::parseAndCo
     return std::make_pair(data1, data2);
 }
 
-char Decode::combineDataAndConvertToChar(const Eigen::Matrix<int, 1, 4>& data1, const Eigen::Matrix<int, 1, 4>& data2) {
+char Decode::combineDataAndConvertToChar(const Eigen::Matrix<int, 1, 4>& data1, const Eigen::Matrix<int, 1, 4>& data2) const {
     if (data1.size() == 0 || data2.size() == 0) {
         std::cerr << "Invalid data detected. Skipping character conversion." << std::endl;
         return '\0';

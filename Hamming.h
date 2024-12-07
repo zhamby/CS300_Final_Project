@@ -32,9 +32,9 @@ class Hamming {
         virtual ~Hamming();
 
         /**
-         * @brief Prints the output of the encoding/decoding process.
+         * @brief Prints the generator and parity check matrices.
          */
-        void printOut();
+        void printOut() const;
         
     protected:
         Eigen::Matrix<int, 7, 4> generator;  ///< Hamming generator matrix (7x4)
@@ -79,7 +79,7 @@ class Decode : public Hamming {
          * @param line The binary string to parse.
          * @return A vector of integers representing the binary data.
          */
-        std::vector<int> parseLineToBits(const std::string& line);
+        std::vector<int> parseLineToBits(const std::string& line) const;
 
         /**
          * @brief Checks the parity of a 7-bit block.
@@ -93,21 +93,21 @@ class Decode : public Hamming {
          * @param block The 7-bit block to extract data from.
          * @return A 4-bit data matrix.
          */
-        Eigen::Matrix<int, 1, 4> extractData(const Eigen::Matrix<int, 1, 7>& block);
+        Eigen::Matrix<int, 1, 4> extractData(const Eigen::Matrix<int, 1, 7>& block) const;
 
         /**
          * @brief Converts a 4-bit matrix to a character.
          * @param data The 4-bit matrix.
          * @return The decoded character.
          */
-        char matrixToChar(const Eigen::Matrix<int, 1, 4>& data);
+        char matrixToChar(const Eigen::Matrix<int, 1, 4>& data) const;
 
         /**
          * @brief Corrects a 7-bit block by fixing errors if necessary.
          * @param block The 7-bit block to correct.
          * @return The corrected block.
          */
-        Eigen::Matrix<int, 1, 7> correctBlock(const Eigen::Matrix<int, 1, 7>& block);
+        Eigen::Matrix<int, 1, 7> correctBlock(const Eigen::Matrix<int, 1, 7>& block) const;
 
         /**
          * @brief Converts a byte (8-bit data) to a character.
@@ -122,14 +122,14 @@ class Decode : public Hamming {
          * @param data2 The second 4-bit data matrix.
          * @return The combined character.
          */
-        char combineDataAndConvertToChar(const Eigen::Matrix<int, 1, 4>& data1, const Eigen::Matrix<int, 1, 4>& data2);
+        char combineDataAndConvertToChar(const Eigen::Matrix<int, 1, 4>& data1, const Eigen::Matrix<int, 1, 4>& data2) const;
 
         /**
          * @brief Parses and corrects a line of data.
          * @param line The line to parse.
          * @return A pair of 4-bit matrices representing the corrected data.
          */
-        std::pair<Eigen::Matrix<int, 1, 4>, Eigen::Matrix<int, 1, 4>> parseAndCorrectBlock(const std::string& line);
+        std::pair<Eigen::Matrix<int, 1, 4>, Eigen::Matrix<int, 1, 4>> parseAndCorrectBlock(const std::string& line) const;
 };
 
 /**
