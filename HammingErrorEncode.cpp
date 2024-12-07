@@ -23,8 +23,13 @@ ErrorEncode::~ErrorEncode(){}
 void ErrorEncode::encodeFile() {
     std::cout << "encodeFile() is called!" << std::endl;
 
-    // Call base class processFile (encodes the original message)
-    Encode::processFile();  
+    // Check if encodedMessages is already populated
+    if (this->getEncodedMessages().empty()) {
+        // Call base class processFile (encodes the original message)
+        Encode::processFile();
+    } else {
+        std::cout << "Skipping redundant encoding process.\n";
+    }
 
     // Now introduce errors into the encoded messages
     errorEncodeRand();  // Introduce random errors
@@ -35,7 +40,7 @@ void ErrorEncode::encodeFile() {
         return;
     }
 
-    // Now output to fileName_e_out.txt
+    // Output to file
     std::string outputFileName = fileName.substr(0, fileName.find_last_of('.')) + "_e_out.txt";
     std::ofstream outputFile(outputFileName, std::ios::out | std::ios::trunc);
     if (!outputFile.is_open()) {
@@ -43,31 +48,25 @@ void ErrorEncode::encodeFile() {
         return;
     }
 
-    // Debugging: Only print the number of blocks with errors
-    std::cout << "Number of blocks with errors: " << hammingCodeWithErrors.size() << std::endl;
-
     // Write the modified Hamming codes to the output file
     for (size_t i = 0; i < hammingCodeWithErrors.size(); i += 2) {
         if (i + 1 < hammingCodeWithErrors.size()) {
             const auto& code1 = hammingCodeWithErrors[i];
             const auto& code2 = hammingCodeWithErrors[i + 1];
 
-            // Write the 7-bit codes with errors to the file
             for (int j = 0; j < 7; ++j) {
                 outputFile << code1(0, j);  // First 7 bits
             }
             for (int j = 0; j < 7; ++j) {
                 outputFile << code2(0, j);  // Next 7 bits
             }
-
-            outputFile << "\n";  // Newline after each pair
+            outputFile << "\n";
         }
     }
 
     outputFile.close();
     std::cout << "Error encoding complete. Output written to " << outputFileName << ".\n";
 }
-
 
 // Introduces random errors in each Hamming code block
 void ErrorEncode::errorEncodeRand() {
