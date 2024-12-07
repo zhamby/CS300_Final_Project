@@ -23,7 +23,7 @@ ErrorEncode::~ErrorEncode(){}
 void ErrorEncode::encodeFile() {
     std::cout << "encodeFile() is called!" << std::endl;
 
-    // Check if encodedMessages is already populated
+    //Check if encodedMessages is already populated
     if (this->getEncodedMessages().empty()) {
         // Call base class processFile (encodes the original message)
         Encode::processFile();
@@ -31,8 +31,8 @@ void ErrorEncode::encodeFile() {
         std::cout << "Skipping redundant encoding process.\n";
     }
 
-    // Now introduce errors into the encoded messages
-    errorEncodeRand();  // Introduce random errors
+    //introduce errors into the encoded messages
+    errorEncodeRand();  
 
     // Check if hammingCodeWithErrors is populated
     if (hammingCodeWithErrors.empty()) {
@@ -40,7 +40,7 @@ void ErrorEncode::encodeFile() {
         return;
     }
 
-    // Output to file
+    //Output to file
     std::string outputFileName = fileName.substr(0, fileName.find_last_of('.')) + "_e_out.txt";
     std::ofstream outputFile(outputFileName, std::ios::out | std::ios::trunc);
     if (!outputFile.is_open()) {
@@ -48,7 +48,7 @@ void ErrorEncode::encodeFile() {
         return;
     }
 
-    // Write the modified Hamming codes to the output file
+    //Write the modified Hamming codes to the output file
     for (size_t i = 0; i < hammingCodeWithErrors.size(); i += 2) {
         if (i + 1 < hammingCodeWithErrors.size()) {
             const auto& code1 = hammingCodeWithErrors[i];
@@ -68,17 +68,16 @@ void ErrorEncode::encodeFile() {
     std::cout << "Error encoding complete. Output written to " << outputFileName << ".\n";
 }
 
-// Introduces random errors in each Hamming code block
+//Introduces random errors in each Hamming code block
 void ErrorEncode::errorEncodeRand() {
     auto& encodedMessages = this->getEncodedMessages();  // Reference to encoded messages
 
     hammingCodeWithErrors.clear();
 
     for (auto& encodedMessage : encodedMessages) {
-        // Always introduce 1 error
-        int bitPos = rand() % 7;  // Random bit position in the block
-        encodedMessage(0, bitPos) = (encodedMessage(0, bitPos) == 0) ? 1 : 0;  // Flip the bit
+        int bitPos = rand() % 7;  //Random bit position in the block
+        encodedMessage(0, bitPos) = (encodedMessage(0, bitPos) == 0) ? 1 : 0;  //Flip the bit
 
-        hammingCodeWithErrors.push_back(encodedMessage);  // Add the modified message
+        hammingCodeWithErrors.push_back(encodedMessage);  
     }
 }

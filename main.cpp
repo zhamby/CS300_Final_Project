@@ -8,7 +8,7 @@
 
 int main() {
     for (int i = 1; i <= 5; ++i) {
-        // Generate Filename
+        //Generate Filename
         std::string fileName = "test" + std::to_string(i);
         
         //Create objects to test Encode, Error Encode, and Decoding
