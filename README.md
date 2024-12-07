@@ -3,8 +3,7 @@
 
 To Do:
 
--Main (isEqual)
--Check const correctness
+-Main 
 -Test framework
 -Doxygen
 
