@@ -8,6 +8,7 @@
 
 //Encode class constructor
 Encode::Encode(std::string file) : Hamming(file) {
+    processFile();
 }
 Encode::~Encode(){}
 
